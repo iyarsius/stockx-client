@@ -19,9 +19,10 @@ export class MarketsManager {
             }
         }).then(res => res.data.data.browse.results.edges[0].node);
 
-        return new Market({
+        return new Market(this.client, {
             id: product.id,
             sku: product.styleId,
+            brand: product.brand,
             name: `${product.primaryTitle} ${product.secondaryTitle}`,
             image: product.media.smallImageUrl
         })

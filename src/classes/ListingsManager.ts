@@ -10,17 +10,26 @@ export class ListingsManager {
     async create(data: ICreateListingData) {
         const market = await this.client.markets.search(data.sku);
 
-        const res = await this.client.request.post('https://gateway.stockx.com/api/v1/portfolio?a=ask', {
+        if (!market) throw new Error("Product not found");
+
+        await market.fetch();
+        if (market.locked) throw new Error("Product is locked");
+
+        const variant = market.variants.find(v => v.sizeEU === data.size);
+
+        const ask = await this.client.request.post('https://gateway.stockx.com/api/v1/portfolio?a=ask', {
             "PortfolioItem": {
                 "localAmount": Math.round(data.price),
                 "expiresAt": dayjs().add(1, "month").format("YYYY-MM-DDTHH:mm:ssZ"),
                 "localCurrency": "EUR",
-                "productId": "3cc750cf-95e1-42ef-b5af-32ffa6ce933f",
+                "productId": variant.id,
                 "statusMessage": "",
-                "skuUuid": "3cc750cf-95e1-42ef-b5af-32ffa6ce933f"
+                "skuUuid": variant.id,
             },
             "action": "ask"
-        })
+        });
+
+        return ask.data
     };
 
     async get() {

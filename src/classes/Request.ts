@@ -44,6 +44,16 @@ export class Request extends Axios {
         });
     };
 
+    async refreshToken() {
+        const newToken = await this.post('https://accounts.stockx.com/oauth/token', {
+            "client_id": "qV3Xr6KCgnlRlhEoAJXVh0MKpryr1Fkb",
+            "grant_type": "refresh_token",
+            "refresh_token": this.token.refresh_token
+        }).then(res => res.data);
+
+        this.setToken(newToken);
+    };
+
     setToken(token: IJWT) {
         this.token = token;
     };

@@ -21,6 +21,7 @@ export default `query FetchSearchResults($filtersVersion: Int, $query: String, $
               ... on Product {
                 id
                 styleId
+                brand
                 listingType
                 primaryTitle
                 secondaryTitle
