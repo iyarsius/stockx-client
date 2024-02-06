@@ -82,8 +82,8 @@ export class StockxScraper extends EventEmitter {
 
         const data = await this._authorize(challenge.code_challenge, state);
 
-        // const cookie = await axios.get('https://orca-app-4gucx.ondigitalocean.app/stockx').then(res => res.data);
-        this.request.setPx3("790e1929a39df60f2baceedb2e164c38a6ea6f12103d0df25cdee34b3d4d5e70:+Wxe5hVqZAHMpSMhp9jwWNOR2sQrRhxectJx61xZa5HE7oAuD1WY42k9QotmIGXoI1lX7buJnQ6beFsgvOnGCA==:1000:OgVYJUxHh2/xZSTLQmLiOipz/5AUkRWirI4YWFowOV0gZLni8M/HEvjbZJDCuXKFcOsYPl47TRkXBuEVR5PjxsQjIxynGC6KNsB+Zi6q0bKVB0B5f7jU/Y92TVSDb6/TjjKaV+bEjidN3A5WOxPooYb41s4UZxweRzMfBmkIMpMJirx2Js/sN481DxplkuIgDy9W3MIGo+MtgUiCiFpGYUsBwWUWM1zvtenzObI9clx8S6xxTo3XflGvv/0aCB32");
+        // px3 is needed to avoid blocking
+        // this.request.setPx3("");
 
         const result = await this.request.post("https://accounts.stockx.com/usernamepassword/login", {
             client_id: "qV3Xr6KCgnlRlhEoAJXVh0MKpryr1Fkb",
