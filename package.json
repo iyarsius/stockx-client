@@ -3,6 +3,7 @@
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "dayjs": "^1.11.9",
+    "google-spreadsheet": "^3.3.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.6.1",
     "typescript": "^5.1.6"

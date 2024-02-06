@@ -34,7 +34,7 @@ export class ListingsManager {
             id: ask.chainId,
             sku: ask.product.styleId,
             title: ask.product.title,
-            size: ask.product.shoeSize,
+            size: variant.sizeEU,
             brand: ask.product.brand,
             price: ask.localAmount,
             images: [],
@@ -48,7 +48,7 @@ export class ListingsManager {
     async get() {
     };
 
-    async list() {
+    async list(): Promise<Listing[]> {
         const data = await this.client.request.post('https://gateway.stockx.com/api/graphql', {
             query: FetchCurrentAsks,
             variables: {
@@ -61,14 +61,12 @@ export class ListingsManager {
             }
         });
 
-        console.log(data.data.data.viewer.asks.edges)
-
         return data.data.data.viewer.asks.edges.map(e => new Listing(this.client, {
             id: e.node.id,
             sku: e.node.productVariant.product.styleId,
             brand: e.node.productVariant.product.brand,
             title: `${e.node.productVariant.product.primaryTitle} ${e.node.productVariant.product.secondaryTitle}`,
-            size: e.node.productVariant.traits.size,
+            size: e.node.productVariant.sizeChart.displayOptions.find(o => o.type === "eu").size.replace('EU ', ""),
             price: e.node.amount,
             condition: "NEW",
             status: "ACTIVE",

@@ -11,6 +11,10 @@ export interface IImage {
     url: string,
 };
 
+export interface IUpdateListingData {
+    price: number;
+};
+
 export type Condition = "DEADSTOCK" | "NEW" | "NEW_WITH_DEFECTS" | "NO_BOX" | "USED" | "VERY_USED"
 
 export interface IListing {

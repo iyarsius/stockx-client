@@ -55,6 +55,14 @@ export default `query FetchCurrentAsks($query: String, $state: AsksGeneralState,
                   size
                   sizeDescriptor
             }
+            sizeChart {
+              baseSize
+              baseType
+              displayOptions {
+                  size
+                  type
+              }
+          }
           }
         }
       }

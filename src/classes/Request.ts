@@ -36,7 +36,7 @@ export class Request extends Axios {
                 auth0_compat: "s%3Av1.gadzZXNzaW9ugqZoYW5kbGXEQLkNHmUYh2mtwv0tadjfyegj6zoAkX69xmWKntQTVyXhpx7elAU5lSrMk5JBAtccPZdPGsx7Bqcwvnekt5qiNAymY29va2llg6dleHBpcmVz1__Iv5oAZKs_aK5vcmlnaW5hbE1heEFnZc4PcxQAqHNhbWVTaXRlpG5vbmU.TAkfVchEDf1tE2ZzmO4UfVN25MbypOe%2B2%2BRBOy6baZo",
             };
 
-            if (this.px3) cookie['_px3'] = this.px3;
+            if (this.px3 && !this.token) cookie['_px3'] = this.px3;
             const cookieStr = Object.entries(cookie).map(([key, value]) => `${key}=${value}`).join('; ');
 
             config.headers.set("cookie", cookieStr);
@@ -56,6 +56,10 @@ export class Request extends Axios {
 
     setToken(token: IJWT) {
         this.token = token;
+
+        setTimeout(() => {
+            this.refreshToken();
+        }, (token.expires_in - 60) * 1000);
     };
 
     setPx3(px3: string) {
